@@ -24,15 +24,15 @@
                     <div class="content_left">
                       <h4>
                         <router-link
-                            :to="'/'+item.provincie+'/'+item.stad_url+'/'+item.regio_url+'/'+item.categorie_url+'/'+item.id">
+                            :to="'/'+item.provincie.toLowerCase()+'/'+item.stad_url.toLowerCase()+'/'+item.regio_url.toLowerCase()+'/'+item.categorie_url.toLowerCase()+'/'+item.id">
                           {{ item.categorie }}
                         </router-link>
                       </h4>
                       <p class="place_name">
                         <span class="place-name"> {{ item.straat }}</span> in <span class="place-title"
-                                                                                    style="color: #669e97 !important;">{{ item.stad }} </span>,
+                                                                                    style="color: #669e97 !important;"><nuxt-link :to="item.stad.toLowerCase()">{{ item.stad }}</nuxt-link> </span>,
                         <span class="place-name">
-                <nuxt-link :to="`/${item.provincie}`">{{ item.provincie }}</nuxt-link></span>
+               {{ item.provincie }}</span>
                       </p>
                     </div>
                     <div class="content_right">

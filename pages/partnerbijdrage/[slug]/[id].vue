@@ -7,8 +7,8 @@
       <div class="container">
         <div class="breadcrumbs desktop-only">
           <ul class="inline-list">
-            <li><a href="/">Home</a><span class="right-angel">&gt;</span></li>
-            <li><router-link to="/partnerbijdrage/">partnerbijdrage</router-link><span class="right-angel">&gt;</span></li>
+            <li><nuxt-link to="/">Home</nuxt-link><span class="right-angel">&gt;</span></li>
+            <li><nuxt-link to="/partnerbijdrage/">partnerbijdrage</nuxt-link><span class="right-angel">&gt;</span></li>
             <li>
               {{blogDetails.slug}}
             </li>

@@ -23,7 +23,7 @@
             
                             <h2>
                               <router-link
-                                  :to="'/'+item.provincie+'/'+item.stad_url+'/'+item.regio_url+'/'+item.categorie_url+'/'+item.id">
+                                  :to="'/'+item.provincie.toLowerCase()+'/'+item.stad_url.toLowerCase()+'/'+item.regio_url.toLowerCase()+'/'+item.categorie_url.toLowerCase()+'/'+item.id">
                                 {{ item.categorie }}
                               </router-link>
                             </h2>

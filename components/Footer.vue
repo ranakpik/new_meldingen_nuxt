@@ -31,7 +31,7 @@
                          <li><nuxt-link to="/blogs">Blogs</nuxt-link></li>
                           <li><nuxt-link to="/partnerbijdrage">Partnerbijdragen</nuxt-link></li>
                            <li><nuxt-link to="/statistics">Statistics</nuxt-link></li>
-                        <li><a href="">Contact</a></li>
+                        <li><nuxt-link to="/contact">Contact</nuxt-link></li>
             </ul>
           </div>
         </div>
@@ -57,7 +57,6 @@
           <div class="footer-menu">
             <ul>
               <li><a href="">Copyright © 2022</a></li>
-              <li><a href="">Ontworpen door TRMEDIA.AGENCY</a></li>
               <li><a href="">Algemene voorwaarden</a></li>
               <li><a href="">Cookiebeleid</a></li>
               <li><a href="">Privacybeleid</a></li>

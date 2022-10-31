@@ -8,9 +8,9 @@
         <div class="container">
           <div class="breadcrumbs desktop-only">
             <ul class="inline-list">
-              <li><router-link to="/">Home</router-link><span class="right-angel">></span></li>
-              <li><a href="/noord-holland">{{meldingenDetails.provincie}}</a><span class="right-angel">></span></li>
-              <li><a href="/noord-holland/schiphol">{{meldingenDetails.stad}}</a><span class="right-angel">></span></li>
+              <li><nuxt-link to="/">Home</nuxt-link><span class="right-angel">></span></li>
+              <li><nuxt-link :to="'/'+route.params.provincie.toLowerCase() ">{{meldingenDetails.provincie}}</nuxt-link><span class="right-angel">></span></li>
+              <li><nuxt-link :to="'/'+route.params.stad.toLowerCase()">{{meldingenDetails.stad}}</nuxt-link><span class="right-angel">></span></li>
               <li class="text-trans-cap">{{meldingenDetails.categorie}}</li>
             </ul>
           </div>
@@ -30,7 +30,7 @@
 
                   </ul>
                 </div>
-                <p>Regio {{meldingenDetails.regio}} kreeg op  {{DateTime(meldingenDetails.timestamp, 'dddd DD MMMM [om] HH:mm')}} een melding via het p2000 netwerk. De {{meldingenDetails.dienst}} is met spoed uitgerukt naar de {{meldingenDetails.straat}} in {{meldingenDetails.stad}}</p>
+                <p>Regio {{meldingenDetails.regio}} kreeg op  {{DateTime(meldingenDetails.timestamp, 'dddd DD MMMM')}} een melding via het p2000 netwerk. De {{meldingenDetails.dienst}} is met spoed uitgerukt naar de {{meldingenDetails.straat}} in {{meldingenDetails.stad}}</p>
 
 
                 <h3 class="weight-500 mt-30">Verzonden aan eenheden</h3>
@@ -48,8 +48,8 @@
                   <li class="label">Delen:</li>
 
 
-                  <li><ShareNetwork network="facebook" :url="currentUrl" ><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></ShareNetwork></li>
-                  <li><ShareNetwork network="twitter" :url="currentUrl" ><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></ShareNetwork></li>
+                  <li><ShareNetwork network="facebook" :title="meldingenDetails.straat + 'in' + meldingenDetails.stad + '-' + meldingenDetails.categorie " :url="currentUrl" ><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></ShareNetwork></li>
+                  <li><ShareNetwork network="twitter" :title="meldingenDetails.straat + 'in' + meldingenDetails.stad + '-' + meldingenDetails.categorie "  :url="currentUrl" ><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></ShareNetwork></li>
                   <li><a href=""><span class="icon-Instagram"></span></a></li>
                 </ul>
 
@@ -72,7 +72,7 @@
 
                         <h6>
                           <nuxt-link
-                              :to="'/nieuws/'+item.state+'/'+item.city.replace(/\s+/g, '-').toLowerCase()+'/'+item.slug+'/'+item.id"
+                              :to="'/nieuws/'+item.state.toLowerCase()+'/'+item.city.replace(/\s+/g, '-').toLowerCase()+'/'+item.slug.toLowerCase()+'/'+item.id"
                               class="">
                             {{ item.title }}
                           </nuxt-link>
@@ -80,14 +80,14 @@
                         <div class="meta">
                           <ul class="inline-list">
                             <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
-                            <li style="color: darkcyan">{{ item.state }}</li>
+                            <li style="color: darkcyan"><nuxt-link :to="'/nieuws/'+item.state.replace(/\s+/g, '-',).toLowerCase()">{{ item.state }}</nuxt-link></li>
                             <li>Nederland</li>
                           </ul>
                         </div>
                         <div class="btn-group">
                           <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
                              :class="'button btn-more bg-blue border-radius-8 '+ tag"
-                             href="">{{ tag }}</a>
+                            >{{ tag }}</a>
                         </div>
                       </div>
 
@@ -197,13 +197,13 @@ export default {
   },
   methods:{
     DateTime(value){
-      return moment.unix(value,"MM-DD-YYYY");
+      return moment.unix(value).format('MMMM Do YYYY');
     },
     dateTime(value) {
       return moment(value).format('hh:mm');
     },
     RelativeDate(value) {
-      return moment(value).format('MMMM Do YYYY, h:mm:ss a');
+      return moment(value).format('MMMM Do YYYY,');
     },
   },
 }

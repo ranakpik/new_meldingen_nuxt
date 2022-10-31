@@ -19,33 +19,35 @@
 
                 <!--            News card start    -->
 
-                <div v-if="pending === true" :class="pending ? 'spin':''" style="height: 300px;"></div>
+<!--                <div v-if="pending === true" :class="pending ? 'spin':''" style="height: 300px;"></div>-->
 
 
-                <div v-for="(item,i) in news" class="card other-news box-shadow border-radius-8 d-flex">
-                  <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb"></div>
-                  <div class="card-content">
-                    <h3 class="card-heading">
-                      <nuxt-link
-                          :to="'/nieuws/'+item.state+'/'+item.city.replace(/\s+/g, '-').toLowerCase()+'/'+item.slug+'/'+item.id"
-                          class="">
-                        {{ item.title }}
-                      </nuxt-link>
-                    </h3>
-                    <div class="meta">
-                      <ul class="inline-list">
-                        <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
-                        <li><a href="">{{ item.state }}</a>,&nbsp;</li>
-                        <li>Nederland</li>
-                      </ul>
-                    </div>
-                    <div class="btn-group">
-                      <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
-                         :class="'button btn-more bg-blue border-radius-8 '+ tag"
-                         href="">{{ tag }}</a>
-                    </div>
+            <div class="meldingen">
+              <div v-for="(item,i) in news" class="card other-news acard box-shadow border-radius-8 d-flex">
+                <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb"></div>
+                <div class="card-content">
+                  <h3 class="card-heading">
+                    <nuxt-link
+                        :to="'/nieuws/'+item.state.toLowerCase()+'/'+item.city.replace(/\s+/g, '-').toLowerCase()+'/'+item.slug.toLowerCase() +'/'+item.id"
+                        class="">
+                      {{ item.title }}
+                    </nuxt-link>
+                  </h3>
+                  <div class="meta">
+                    <ul class="inline-list">
+                      <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
+                      <li><a href=""><nuxt-link :to="'/nieuws/'+item.state.toLowerCase()">{{ item.state }}</nuxt-link></a>,&nbsp;</li>
+                      <li>Nederland</li>
+                    </ul>
+                  </div>
+                  <div class="btn-group">
+                    <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
+                       :class="'button btn-more bg-blue border-radius-8 '+ tag"
+                    >{{ tag }}</a>
                   </div>
                 </div>
+              </div>
+            </div>
 
                 <!--                News card end-->
 
@@ -64,27 +66,30 @@
 
                 <h2 class="sec-heading mt-30 color-black">Ander Nieuws</h2>
 
-                <div v-for="(item, i) in moreNews" :key="i" class="card other-news box-shadow border-radius-8"
-                     data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
+                <div class="meldingen">
+                  <div v-for="(item, i) in moreNews" :key="i" class="card other-news acard box-shadow border-radius-8"
+                       data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
 
-                  <div class="card-content">
-                    <h3 class="card-heading">
-                      <nuxt-link :to="'/nieuws/'+item.state+'/'+item.city+'/'+item.slug+'/'+item.id" class="">
-                        {{ item.title }}
-                      </nuxt-link>
-                    </h3>
-                    <div class="meta">
-                      <ul class="inline-list">
-                        <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
-                        <li><a href="">{{ item.state }}</a>,&nbsp;</li>
-                        <li>Nederland</li>
-                      </ul>
+                    <div class="card-content">
+                      <h3 class="card-heading">
+                        <nuxt-link :to="'/nieuws/'+item.state+'/'+item.city+'/'+item.slug+'/'+item.id" class="">
+                          {{ item.title }}
+                        </nuxt-link>
+                      </h3>
+                      <div class="meta">
+                        <ul class="inline-list">
+                          <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
+                          <li><nuxt-link :to="'/nieuws/'+item.state.toLowerCase()">{{ item.state }}</nuxt-link>,&nbsp;</li>
+                          <li>Nederland</li>
+                        </ul>
+                      </div>
+                      <div class="btn-group">
+                        <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
+                           :class="'button btn-more bg-blue border-radius-8 '+ tag"
+                           href="">{{ tag }}</a>
+                      </div>
                     </div>
-                    <div class="btn-group">
-                      <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
-                         :class="'button btn-more bg-blue border-radius-8 '+ tag"
-                         href="">{{ tag }}</a>
-                    </div>
+
                   </div>
 
                 </div>
@@ -109,7 +114,7 @@
                         <img :src="`/_nuxt/assets/img/${item.dienst}.png`" class="news-icon"/>
 
                         <nuxt-link
-                            :to="'/'+item.provincie+'/'+item.stad_url+'/'+item.straat_url+'/'+item.categorie_url+'/'+item.id">
+                            :to="'/'+item.provincie.toLowerCase()+'/'+item.stad_url.toLowerCase()+'/'+item.straat_url.toLowerCase()+'/'+item.categorie_url+'/'+item.id">
                           {{ item.categorie }}
                         </nuxt-link>
                       </h3>
@@ -120,11 +125,11 @@
                         </ul>
                       </div>
                       <span class="place-name"> {{ item.straat }}</span> in <span class="place-title"
-                                                                                  style="color: #669e97 !important;">{{ item.stad }} </span>,
+                                                                                  style="color: #669e97 !important;"><nuxt-link :to="'/'+item.stad.toLowerCase()">{{ item.stad }}</nuxt-link> </span>,
                       <span class="place-name">
                 {{ item.provincie }}</span>
                       <div class="btn-group">
-                        <a :class="'button btn-more bg-red border-radius-8 '+item.dienst" href="">{{ item.dienst }}</a>
+                        <a :class="'button btn-more bg-red border-radius-8 '+item.dienst">{{ item.dienst }}</a>
 
                       </div>
                     </div>
@@ -205,17 +210,6 @@ onMounted(() => {
   refreshNuxtData('recent_meldingen');
 })
 
-// useHead({
-//   title: seo.title,
-//   meta: [
-//     { name: 'description', content: 'My amazing site.' }
-//   ],
-//   bodyAttrs: {
-//     class: 'test'
-//   },
-//   script: [ { children: 'console.log(\'Hello world\')' } ]
-// })
-
 
 </script>
 
@@ -223,10 +217,7 @@ onMounted(() => {
 
 import moment from 'moment';
 import axios from 'axios';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import {reactive} from 'vue'
-import {useHead} from '@vueuse/head';
+
 import addImage from 'assets/img/add-img.jpg'
 import Location from "../../components/Location";
 
@@ -255,14 +246,12 @@ export default {
   },
 
   mounted() {
-    AOS.init();
     this.getOtherNews();
     window.addEventListener('scroll', this.handleScroll);
   
     // this.fetchNews();
   },
   methods: {
-
     dateTime(value) {
       return moment(value).format('hh:mm');
     },

@@ -13,7 +13,7 @@
                 <span class="right-angel">&gt;</span>
               </li>
               <li>
-                <nuxt-link to="/nieuws/">{{ newsDetails.state }}</nuxt-link>
+                <nuxt-link :to="'/nieuws/'+newsDetails.state.toLowerCase()">{{ newsDetails.state }}</nuxt-link>
                 <span class="right-angel">&gt;</span>
               </li>
               <li>
@@ -48,7 +48,7 @@
 
                       <ul class="inline-list">
                         <li><span class="icon-clock"></span> {{ dateTime(newsDetails.timestamp) }} in <span
-                            style="color:red"> {{ newsDetails.city }}</span> , {{ newsDetails.state }}
+                            style="color:red"> <nuxt-link :to="'/nieuws/'+newsDetails.city.toLowerCase()">{{ newsDetails.city }}</nuxt-link></span> , {{ newsDetails.state }}
                         </li>
 
                       </ul>
@@ -167,7 +167,7 @@
 
                         <h6>
                           <nuxt-link
-                              :to="'/nieuws/'+item.state+'/'+item.city.replace(/\s+/g, '-').toLowerCase()+'/'+item.slug+'/'+item.id"
+                              :to="'/nieuws/'+item.state.toLowerCase()+'/'+item.city.replace(/\s+/g, '-').toLowerCase()+'/'+item.slug.toLowerCase()+'/'+item.id"
                               class="">
                             {{ item.title }}
                           </nuxt-link>
@@ -175,14 +175,14 @@
                         <div class="meta">
                           <ul class="inline-list">
                             <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
-                            <li style="color: darkcyan">{{ item.state }}</li>
+                            <li style="color: darkcyan"><nuxt-link :to="'/nieuws/'+item.state">{{ item.state }}</nuxt-link></li>
                             <li>Nederland</li>
                           </ul>
                         </div>
                         <div class="btn-group">
                           <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
                              :class="'button btn-more bg-blue border-radius-8 '+ tag"
-                             href="">{{ tag }}</a>
+                             >{{ tag }}</a>
                         </div>
                       </div>
 
