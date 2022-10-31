@@ -18,17 +18,24 @@
 
                 <!--            News card start    -->
 
-                <div v-if="pending === true" :class="pending ? 'spin' : ''" style="height: 300px;"></div>
+<!--                <div v-if="pending === true" :class="pending ? 'spin' : ''" style="height: 300px;"></div>-->
+
 
 
                 <div v-for="(item, i) in allNews" class="card other-news box-shadow border-radius-8 d-flex"
                   data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
                   <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb border-radius"></div>
+
+              <div class="meldingen">
+                <div v-for="(item, i) in allNews" class="card other-news acard box-shadow border-radius-8 d-flex"
+                     data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
+                  <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb"></div>
+
                   <div class="card-content">
                     <h3 class="card-heading">
                       <nuxt-link
-                        :to="'/nieuws/' + item.state + '/' + item.city.replace(/\s+/g, '-').toLowerCase() + '/' + item.slug + '/' + item.id"
-                        class="">
+                          :to="'/nieuws/' + item.state.toLowerCase() + '/' + item.city.replace(/\s+/g, '-').toLowerCase() + '/' + item.slug.toLowerCase() + '/' + item.id"
+                          class="">
                         {{ item.title }}
                       </nuxt-link>
                     </h3>
@@ -36,7 +43,7 @@
                       <ul class="inline-list">
                         <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
                         <li>
-                          <nuxt-link to="">{{ item.state }}</nuxt-link>
+                          <nuxt-link :to="'/nieuws/'+item.state.toLowerCase()">{{ item.state }}</nuxt-link>
                           ,&nbsp;
                         </li>
                         <li>Nederland</li>
@@ -44,10 +51,11 @@
                     </div>
                     <div class="btn-group">
                       <a v-for="(tag, i) in item.tags.split(',')" v-show="tag.length !== 0"
-                        :class="'button btn-more bg-blue border-radius-8 ' + tag" href="">{{ tag }}</a>
+                         :class="'button btn-more bg-blue border-radius-8 ' + tag">{{ tag }}</a>
                     </div>
                   </div>
                 </div>
+              </div>
 
                 <!--                News card end-->
 
@@ -66,29 +74,32 @@
 
                 <h2 class="sec-heading mt-30 color-black">Ander Nieuws</h2>
 
-                <div v-for="(item, i) in moreNews" :key="i" class="card other-news box-shadow border-radius-8"
-                  data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
+               <div class="meldingen">
+                 <div v-for="(item, i) in moreNews" :key="i" class="card other-news acard box-shadow border-radius-8"
+                      data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
 
-                  <div class="card-content">
-                    <h3 class="card-heading">
-                      <nuxt-link :to="'/nieuws/' + item.state + '/' + item.city + '/' + item.slug + '/' + item.id" class="">
-                        {{ item.title }}
-                      </nuxt-link>
-                    </h3>
-                    <div class="meta">
-                      <ul class="inline-list">
-                        <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
-                        <li><a href="">{{ item.state }}</a>,&nbsp;</li>
-                        <li>Nederland</li>
-                      </ul>
-                    </div>
-                    <div class="btn-group">
-                      <a v-for="(tag, i) in item.tags.split(',')" v-show="tag.length !== 0"
-                        :class="'button btn-more bg-blue border-radius-8 ' + tag" href="">{{ tag }}</a>
-                    </div>
-                  </div>
+                   <div class="card-content">
+                     <h3 class="card-heading">
+                       <nuxt-link :to="'/nieuws/' + item.state + '/' + item.city + '/' + item.slug + '/' + item.id" class="">
+                         {{ item.title }}
+                       </nuxt-link>
+                     </h3>
+                     <div class="meta">
+                       <ul class="inline-list">
+                         <li><span class="icon-clock"></span> {{ dateTime(item.created_at) }} in &nbsp;</li>
+                         <li><nuxt-link :to="'/nieuws/'+item.state.toLowerCase()">{{ item.state }}</nuxt-link>,&nbsp;</li>
+                         <li>Nederland</li>
+                       </ul>
+                     </div>
+                     <div class="btn-group">
+                       <a v-for="(tag, i) in item.tags.split(',')" v-show="tag.length !== 0"
+                          :class="'button btn-more bg-blue border-radius-8 ' + tag" >{{ tag }}</a>
+                     </div>
+                   </div>
 
-                </div>
+                 </div>
+
+               </div>
                 <div v-if="loadingMore === true" :class="loadingMore ? 'spin' : ''" style="height: 300px;"></div>
 
 
@@ -110,7 +121,7 @@
                         <img :src="`/_nuxt/assets/img/${item.dienst}.png`" class="news-icon" />
 
                         <nuxt-link
-                          :to="'/' + item.provincie + '/' + item.stad_url + '/' + item.straat_url + '/' + item.categorie_url + '/' + item.id">
+                          :to="'/' + item.provincie.toLowerCase() + '/' + item.stad_url.toLowerCase() + '/' + item.straat_url.toLowerCase() + '/' + item.categorie_url.toLowerCase() + '/' + item.id">
                           {{ item.categorie }}
                         </nuxt-link>
                       </h3>
@@ -121,11 +132,16 @@
                         </ul>
                       </div>
                       <span class="place-name"> {{ item.straat }}</span> in <span class="place-title"
-                        style="color: #669e97 !important;">{{ item.stad }} </span>,
+                        style="color: #669e97 !important;"><nuxt-link :to="'/'+item.stad.toLowerCase()">{{ item.stad }}</nuxt-link> </span>,
                       <span class="place-name">
                         {{ item.provincie }}</span>
+
                       <div class="btn-group mt-10">
                         <a :class="'button btn-more bg-red border-radius-8 ' + item.dienst" href="">{{ item.dienst }}</a>
+
+                      <div class="btn-group">
+                        <a :class="'button btn-more bg-red border-radius-8 ' + item.dienst">{{ item.dienst }}</a>
+
 
                       </div>
                     </div>
@@ -173,7 +189,7 @@ backend = config.public.backend;
 const { data } = await useAsyncData('seo', () => $fetch(`${apiUrl}/seo-data/Nieuws`))
 
 useHead({
-  title: `${data.value.title}  ${router.params.regio}`,
+  title: `${data.value.title} - ${router.params.provincie.replace(/-/g, ' ')}`,
   meta: [
     { name: 'description', content: `${data.value.seo_meta}` },
     { name: 'keywords', content: `${data.value.seo_keywords}` }
@@ -197,8 +213,7 @@ onMounted(() => {
 <script>
 import moment from 'moment';
 import addImage from 'assets/img/add-img.jpg';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+
 import axios from "axios";
 
 let apiUrl;
@@ -222,7 +237,6 @@ export default {
   },
 
   mounted() {
-    AOS.init();
     this.getOtherNews();
     window.addEventListener('scroll', this.handleScroll);
 

@@ -68,7 +68,11 @@ export default {
 
         axios.get(geoApi)
             .then((response) => {
-              this.$router.push(`/${this.urlPath}/${response.data.city}`)
+              if(this.urlPath == 'meldingen'){
+                this.$router.push(`/${response.data.city}`)
+              }else{
+                this.$router.push(`/${this.urlPath}/${response.data.city}`)
+              }
             })
             .catch((error) => {
               console.log(error.response.data)

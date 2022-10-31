@@ -15,6 +15,17 @@
                 <div class="text-left">
                   <h2 >Contact From</h2>
                   <p>Meldingen.nl helpt u graag. Via onderstaand formulier kunt u contact met ons opnemen. Indien nodig zullen wij uw mail zo snel mogelijk beantwoorden.</p>
+
+                  <h4>Of bereik ons via:</h4>
+                  <ul class="social dark-white white-dark d-block">
+                    <li><a href=""><span class="icon-Instagram"></span> <span class="text">Instagram (@meldingen.nl)</span></a></li>
+                    <li><a href=""><span class="icon-twitter"><span class="path1"></span><span
+                        class="path2"></span></span> <span class="text">Twitter (@meldingen.nl)</span></a></li>
+                    <li><a href=""><span class="icon-facebook"><span class="path1"></span><span
+                        class="path2"></span></span><span class="text"> Facebook (meldingen.nl)</span></a></li>
+
+                  </ul>
+
                 </div>
               </div>
               <div class="col-md-6 box-shadow border-radius-8">

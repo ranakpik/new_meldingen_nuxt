@@ -5,14 +5,15 @@
             <!-- / Step Section-->
             <section class="page-content details-page sec-padding">
               <div class="container">
-                <div class="breadcrumbs desktop-only">
-                  <ul class="inline-list">
-                    <li><nuxt-link to="/">Home</nuxt-link><span class="right-angel">&gt;</span></li>
-                    <li><nuxt-link to="/blogs">Blogs</nuxt-link><span class="right-angel">&gt;</span></li>
-                    <li>
-                      {{blogDetails.slug}}
-                    </li>
-                  </ul>
+                <div class="row">
+                  <div class="breadcrumbs desktop-only">
+                    <ul class="inline-list">
+                      <li><nuxt-link to="/">Home</nuxt-link><span class="right-angel">></span></li>
+                      <li><nuxt-link to="/blogs">Blogs</nuxt-link><span class="right-angel">></span></li>
+
+                      <li class="text-trans-cap">{{blogDetails.slug}}</li>
+                    </ul>
+                  </div>
                 </div>
                 <div class="row with-sidebar pt-30 m-pt-0">
                   <div class="col-md-12">

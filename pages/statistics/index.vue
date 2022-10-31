@@ -169,6 +169,67 @@
 
          </div>
 
+<!--         chart 6-->
+         <div class="col-lg-12">
+           <div class="card other-news box-shadow border-radius-8">
+             <div class="card-content">
+               <strong>
+                 <h4>
+                    <span style="vertical-align: inherit;">
+                      <span style="vertical-align: inherit;">Emergency meldingen</span>
+                    </span>
+                 </h4>
+               </strong>
+               <p>
+                  <span style="vertical-align: inherit;">
+                    <span style="vertical-align: inherit;">Total of the meldingen
+                    </span>
+                  </span>
+
+                 <select name="datatablesSimple_length" ref="select_provincie" @change="(e)=>selectEmergencyTime(e)">
+                   <option v-for="i in 24" selected :key="i" v-bind:value="i">{{i}} uur</option>
+                 </select>
+               </p>
+
+               <div style=" margin-bottom: 2px;" id="slider" class="loaded">
+                 <div class="wrapper">
+                   <div id="provincie_buttons_area" class="slides chart-btn" style="left: -660px;">
+
+
+                     <button v-for="(item, i) in emergencyBtn" :key="i" :id="item.dienst"
+                             @click="emergencySelect(item.dienst,i)"
+                             :class="index === i ?'provienci button active':'provienci button'" :value="item.dienst"
+                             style="margin-left: 2px;margin-top: 3px;">
+
+                        <span style="vertical-align: inherit;" class="provincie_name"  >{{item.dienst}}
+                          <span style="margin-left: 2px;display:block;span-size: 18px;" :id="'provincie'+i">{{item.total}}</span>
+                        </span>
+
+
+
+                     </button>
+
+
+                   </div>
+                 </div>
+                 <a id="prev" class="control prev"></a>
+                 <a id="next" class="control next"></a>
+                 <div class="dots"><i data-id="0" class=""></i><i data-id="1" class=""></i><i data-id="2"
+                                                                                              class=""></i><i data-id="3" class=""></i><i data-id="4" class="active"></i><i data-id="5"
+                                                                                                                                                                            class=""></i><i data-id="6" class=""></i><i data-id="7" class=""></i><i data-id="8"
+                                                                                                                                                                                                                                                    class=""></i><i data-id="9" class=""></i><i data-id="10" class=""></i><i data-id="11"
+                                                                                                                                                                                                                                                                                                                             class=""></i></div>
+               </div><br>
+
+               <div style="height: 300px" ref="emergency_canvas" class="">
+                 <canvas id="myChart6" style="display: block; box-sizing: border-box; height: 300px; width: 683px;"
+                         width="500" height="150"  ></canvas>
+               </div>
+             </div>
+
+           </div>
+         </div>
+
        </div>
      </div>
    </div>
@@ -208,8 +269,10 @@ export default {
       myChart5: null,
       provincie: [],
       provincieCount: [],
+      emergencyBtn:[],
       isLoading: false,
       defaultProvincie: 'Drenthe',
+      defaultEmergency: 'ambulance',
       index: 0,
       config1: {
         type: 'line',
@@ -516,6 +579,71 @@ export default {
           }
         }
       },
+      config6: {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{
+            label: 'Totaal Meldingen',
+            data: [],
+            backgroundColor: [
+              'rgba(43,88,130,0.4)',
+            ],
+
+            pointRadius: 1,
+            pointHoverRadius: 1,
+            fill: true,
+            redraw: true,
+            borderColor: [
+              'rgba(31,65,96)',
+
+            ],
+            borderWidth: 3
+          }]
+        },
+        options: {
+          animation: {
+            duration: 1,
+
+          },
+          scales: {
+            y: {
+              display: false
+            },
+            ticks: {
+              display: false
+            }
+          },
+
+          elements: {
+            point: {
+              radius: 0
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              position: 'nearest',
+              padding: 10,
+              cornerRadius: 10,
+              backgroundColor: 'rgba(43,88,133)',
+              callbacks: {
+                label: function (context) {
+                  return context.parsed.y;
+                },
+                title: () => null
+              },
+
+              yAlign: 'bottom',
+              displayColors: false,
+
+            },
+
+          }
+        }
+      },
 
     }
   },
@@ -553,19 +681,12 @@ export default {
       this.fetchAmbulanceMeldingen(defaultAmbulanceTime, regio);
       this.fetchBrandweerMeldingen(defaultBrandweer, regio);
       this.fetchPolitieMeldingen(defaultPolitie, regio);
-      this.fetchProvincie();
-      this.fetchProvincieMeldingen(provincieValue, this.defaultProvincie)
+
+      this.fetchProvincieMeldingen(provincieValue, this.defaultProvincie);
+      this.fetchEmergencyMeldingen(24,this.defaultEmergency)
     },
 
-    fetchProvincie() {
-      axios.get(`${apiUrl}/charts/provincie`)
-          .then((response) => {
-            this.provincie = response.data
-          })
-          .catch(error => {
-            console.log(error.response.data);
-          })
-    },
+
     //meldingen Chart
 
     meldingenChartRender() {
@@ -737,9 +858,6 @@ export default {
           this.config5
       );
     },
-
-
-
     fetchProvincieMeldingen(hour, provincie) {
       this.$refs.provincie_canvas.classList.value = "spin";
       axios.get(`${apiUrl}/charts/prov/${hour}/${provincie}`)
@@ -757,6 +875,60 @@ export default {
             this.$refs.provincie_canvas.classList.value = "";
 
             this.provincieCount = response.data.hoursData;
+
+          })
+
+    },
+
+
+    //Emergency charts
+
+    emergencySelect(provincie, i) {
+      this.index = i;
+      const selectedValue = this.$refs.select_provincie.value;
+
+
+      this.fetchEmergencyMeldingen(selectedValue, provincie);
+
+
+    },
+
+    selectEmergencyTime(e) {
+      const hour = e.target.value;
+      const btn = document.getElementsByClassName('provienci button active');
+      this.fetchProvincieMeldingen(hour, btn[0].value)
+
+
+    },
+    EmergencyChartRender() {
+      if (this.myChart6 != null) {
+        this.myChart5.destroy();
+      }
+      this.myChart6 = new Chart(
+          document.getElementById('myChart6'),
+          this.config6
+      );
+    },
+
+
+
+    fetchEmergencyMeldingen(hour, emergency) {
+      this.$refs.emergency_canvas.classList.value = "spin";
+      axios.get(`${apiUrl}/charts/emergency/${hour}/${emergency}`)
+          .then((response) => {
+
+            this.config6.data.labels = [];
+            this.config6.data.datasets[0].data = [];
+            for (let i = 0; i < response.data.chart.length; i++) {
+              this.config6.data.labels.push((response.data.chart[i].time.length == 1 ? '0' : '') + response.data.chart[i].time);
+              this.config6.data.datasets[0].data.push(response.data.chart[i].calculated);
+            }
+
+            this.emergencyBtn = response.data.buttons
+
+            this.EmergencyChartRender();
+            this.$refs.emergency_canvas.classList.value = "";
+
 
           })
 
