@@ -1,5 +1,6 @@
 <template>
   <!--Location call to action section-->
+  <div class="header_bellow_bg"></div>
   <section class="call-to-action">
     <div class="container">
       <div class="row d-flex align-items-center call-to-row box-shadow bg-white-gray">

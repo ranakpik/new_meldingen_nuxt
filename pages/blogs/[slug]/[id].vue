@@ -14,8 +14,8 @@
                     </li>
                   </ul>
                 </div>
-                <div class="row with-sidebar">
-                  <div class="col-md-12 pt-30 m-pt-0">
+                <div class="row with-sidebar pt-30 m-pt-0">
+                  <div class="col-md-12">
                     <div class="card card-overlay other-news box-shadow border-radius">
                       <div class="card-thumb">
                         <img class="desktop-only" :src="backend + blogDetails.images" alt="nieuws image">
@@ -57,8 +57,7 @@
         
                         <div class="card mobile-col-2 other-news box-shadow border-radius-8" v-for="(item, i) in recents" :key="i">
                           <div class="card-thumb">
-                            <img class="desktop-only" :src="backend + item.images" alt="blog image">
-                            <img class="mobile-only" :src="backend + item.images" alt="blog image">
+                            <img class="block-thumb" :src="backend + item.images" alt="blog image">
                           </div>
                           <div class="card-content">
         

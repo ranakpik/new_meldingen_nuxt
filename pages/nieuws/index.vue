@@ -23,7 +23,7 @@
 
 
                 <div v-for="(item,i) in news" class="card other-news box-shadow border-radius-8 d-flex">
-                  <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb"></div>
+                  <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb border-radius"></div>
                   <div class="card-content">
                     <h3 class="card-heading">
                       <nuxt-link
@@ -39,7 +39,7 @@
                         <li>Nederland</li>
                       </ul>
                     </div>
-                    <div class="btn-group">
+                    <div class="btn-group mt-10">
                       <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
                          :class="'button btn-more bg-blue border-radius-8 '+ tag"
                          href="">{{ tag }}</a>
@@ -80,7 +80,7 @@
                         <li>Nederland</li>
                       </ul>
                     </div>
-                    <div class="btn-group">
+                    <div class="btn-group mt-10">
                       <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
                          :class="'button btn-more bg-blue border-radius-8 '+ tag"
                          href="">{{ tag }}</a>
@@ -104,7 +104,7 @@
                 <div v-for="(item,i) in recentMeldingen">
                   <div class="card other-news box-shadow border-radius-8">
                     <div class="card-content">
-                      <h3>
+                      <h3 class="d-flex align-items-center">
 
                         <img :src="`/_nuxt/assets/img/${item.dienst}.png`" class="news-icon"/>
 
@@ -123,7 +123,7 @@
                                                                                   style="color: #669e97 !important;">{{ item.stad }} </span>,
                       <span class="place-name">
                 {{ item.provincie }}</span>
-                      <div class="btn-group">
+                      <div class="btn-group mt-10">
                         <a :class="'button btn-more bg-red border-radius-8 '+item.dienst" href="">{{ item.dienst }}</a>
 
                       </div>
@@ -314,5 +314,13 @@ export default {
 </script>
 
 <style scoped>
-
+.card-content .meta {
+  margin-bottom: 5px;
+}
+.btn-group .button {
+  margin-bottom: 0;
+}
+.news_drop div#news-list {
+  padding: 10px;
+}
 </style>

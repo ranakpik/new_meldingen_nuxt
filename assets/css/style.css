@@ -83,12 +83,19 @@ div#search_by_place_result {
     height: 50px;
     background-color: red;
 }
+.header_bellow_bg {
+    height: 30px;
+    background-color: var(--theme-color);
+}
 
 .my-account-page .content-box {
     padding: 30px;
     background-image: none;
 }
-
+.news_drop div#news-list {
+    margin: 0;
+    margin-bottom: 20px;
+}
 .contact-form {
 
     text-align: center;

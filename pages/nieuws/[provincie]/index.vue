@@ -5,11 +5,13 @@
 
 
       <Location urlPath="nieuws" />
-      <RegioList :region="region" path="nieuws" />
 
       <!-- News Section-->
       <section class="news-archive sec-padding pt-0">
         <div class="container">
+          <div class="news_lsit mt-20">
+            <RegioList path="nieuws" region="Nederland"/>
+          </div>
           <div class="row">
             <div class="col-md-8 col-xs-12 ">
               <div class="main-content main-height">
@@ -21,7 +23,7 @@
 
                 <div v-for="(item, i) in allNews" class="card other-news box-shadow border-radius-8 d-flex"
                   data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
-                  <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb"></div>
+                  <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb border-radius"></div>
                   <div class="card-content">
                     <h3 class="card-heading">
                       <nuxt-link
@@ -103,7 +105,7 @@
                 <div v-for="(item, i) in recentMeldingen">
                   <div class="card other-news box-shadow border-radius-8">
                     <div class="card-content">
-                      <h3>
+                      <h3 class="d-flex align-items-center">
 
                         <img :src="`/_nuxt/assets/img/${item.dienst}.png`" class="news-icon" />
 
@@ -122,7 +124,7 @@
                         style="color: #669e97 !important;">{{ item.stad }} </span>,
                       <span class="place-name">
                         {{ item.provincie }}</span>
-                      <div class="btn-group">
+                      <div class="btn-group mt-10">
                         <a :class="'button btn-more bg-red border-radius-8 ' + item.dienst" href="">{{ item.dienst }}</a>
 
                       </div>
@@ -275,3 +277,14 @@ export default {
   },
 }
 </script>
+<style scoped>
+.card-content .meta {
+  margin-bottom: 5px;
+}
+.btn-group .button {
+  margin-bottom: 0;
+}
+.news_drop div#news-list {
+  padding: 10px;
+}
+</style>
